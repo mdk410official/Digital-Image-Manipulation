@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.final {
+  border: 10px solid black;
+}
+body {
+  margin: 20px 0px;
+}
+
+.text-center {
+  font-size: 24px;
+}
+
+table {
+  display: flex;
+  justify-content: center;
+}
+
+pre {
+  overflow: auto;
+  height: fit-content;
+  width: fit-content;
+  white-space: pre-wrap;
+  word-wrap: normal;
+}
+
+.text-start {
+  position: relative;
+  left: 200px;
+
+  width: 1200px;
+  font-size: 20px;
+}
+
+.dates {
+  color: red;
+}
+
+hr {
+  border-color: red;
+  height: 20px;
+}
+
+.diagram {
+  width: fit-content;
+  border: 2px solid black;
+  display: inline;
+  margin: 80px;
+}
+
+.diagram-container {
+  position: relative;
+  left: 200px;
+}
+
+img {
+  text-align: center;
+}
