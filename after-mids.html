@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="Digital-Image-Manipulation.css" />
+
+    <title>Digital Image Manipulation</title>
+  </head>
+
+  <body>
+    <div class="navbar">
+      <a href="index.html" class="before-mids">Before Mids</a>
+      <a href="after-mids.html" class="after-mids">After Mids</a>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <p class="text-start dates">Dec 14th, 2023</p>
+    <h6 class="text-center">Histogram Equilization</h6>
+    <h6 class="text-center">Week4 Lec7</h6>
+    <pre class="text-start">
+Last topic of Spatial Domain and uses Global Operations
+
+                        range [0,255] will be [0,1] in histograms.
+
+                        segmentation?
+
+                        bins nearer to 0 are dark and nearer to 1 are bright. In between are low contrast image and are present only at mid. If bins start from the left and end at right, they are high contract images.
+
+                        if we remove all pixels from the image, no pixel is left so the image is going to be dark image. #0
+
+                        histogram can also be used in enhancements... 
+                        it has two types contrast sketching and CDF PDF Method... 
+</pre
+    >
+    <h6 class="text-center">Contrast Sketching</h6>
+    <pre class="text-start">
+                        Formula:- 
+
+                        S=T(r) = (r-r<sub>min</sub>)(L / r<sub>max</sub> - r<sub>min</sub>), where r is pixel selected, L is the highest grey level, r min means the smallest possible pixel and r max mins the highest possible pixel in the given image.
+
+                        if the graph goes up, it is monotonically increasing or bright 
+                        if the graph goes down, it is monotonically decreasing or dark
+                    </pre
+    >
+    <h6 class="text-start">Question:-</h6>
+    <pre class="text-start">
+we can either be given with the image and we have to make the table to begin or if we are given with just the table, then no need to make the image.</pre
+    >
+    <h6 class="text-center">Table</h6>
+    <table class="table">
+      <tr>
+        <th>L</th>
+        <td>0</td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <th>n</th>
+        <td>0</td>
+        <td>4</td>
+        <td>4</td>
+        <td>1</td>
+        <td>2</td>
+        <td>2</td>
+        <td>3</td>
+        <td>0</td>
+      </tr>
+    </table>
+    <h6 class="text-center">Image</h6>
+    <pre class="text-start">
+    2   1   2   1
+    4   5   5   6
+    3   3   1   4
+    6   2   1   6
+
+    r min = 1, r max = 6
+    L = 2<sup>3</sup>=8 or (0-7) so we will write the highest value i.e. 7
+
+    putting values in the formula:- 
+    S = T(r) = (r-r<sub>min</sub>)(L / r<sub>max</sub> - r<sub>min</sub>)
+    S = T(r) = (r-1)(7 / 6-1) = (r-1)(7/5) = 7(r-1) / 5 which is going to be the normalized formula and we will use this formula for all the pixels present in the image.
+
+    </pre>
+    <p class="text-center">
+      <img src="Pictures/Dec14th-1.PNG" alt="check picture folder" />
+    </p>
+    <table class="table">
+      <tr>
+        <th>L (Transformation level)</th>
+        <td>0</td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <th>n (frequency)</th>
+        <td>0</td>
+        <td>4</td>
+        <td>4</td>
+        <td>1</td>
+        <td>2</td>
+        <td>2</td>
+        <td>3</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <th>L` (L prime)</th>
+        <td>-1.4</td>
+        <td>0</td>
+        <td>1.4</td>
+        <td>2.8</td>
+        <td>4.2</td>
+        <td>5.6</td>
+        <td>7.0</td>
+        <td>8.4</td>
+      </tr>
+      <tr>
+        <td colspan="9">
+          now, we will round off to the nearest, values in negative will become
+          zero, and values greater than the scale [0,7] will become 7.
+        </td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>3</td>
+        <td>4</td>
+        <td>6</td>
+        <td>7</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <th>m (Transformation count)</th>
+        <td>4</td>
+        <td>4</td>
+        <td>4</td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+      </tr>
+    </table>
+    <p class="text-center">
+      <img src="Pictures/Dec14th-2.PNG" alt="check picture folder" />
+    </p>
+    <pre class="text-start">
+                        contrast sketching has values distributed all over the table which is good for the machine but depends for the human sight. sometimes it is good, sometimes it is bad but it is always bad as compared to CDF PDF method.
+                    </pre
+    >
+    <h6 class="text-center">Histogram Equilization by CDF PDF method</h6>
+    <pre class="text-start">
+the images processed by this method are more prominent and advanced as compared to contrast sketching. unlike contrast sketching which uses min max values of the pixel, it affects the whole image.</pre
+    >
+    <pre class="text-start">
+    4   4   4   4   4
+    3   4   5   4   3
+    3   5   5   5   3
+    3   4
+</pre
+    >
+    <table class="table">
+      <tr>
+        <th>Levels</th>
+        <th>No. of Pixels</th>
+        <th>PDF = No. of Pixels / total number of pixels</th>
+        <th>CDF Sn (first derivative or adding next value of PDF to CDF)</th>
+        <th>Sn * Max L (Equalization)</th>
+        <th>Scale (round of)</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>0 / 0 = 0</td>
+        <td>since PDF = 0 so 0</td>
+        <td>0 * 7 = 0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0 + 0 = 0</td>
+        <td>7 * 0 = 0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>6</td>
+        <td>6/25 = 0.04</td>
+        <td>0 + 0.24 = 0.24</td>
+        <td>0.24 * 7 = 1.68</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>14</td>
+        <td>14 / 25 = 0.56</td>
+        <td>0.56 + 0.24 = 0.8</td>
+        <td>5.6</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>5</td>
+        <td>0.2</td>
+        <td>1</td>
+        <td>7</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0 + 1 = 1</td>
+        <td>7</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>7</td>
+        <td>7</td>
+      </tr>
+      <tr>
+        <td>Total (n)</td>
+        <td>25</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <p class="text-center">
+      <img src="Pictures/Dec14th-3.PNG" alt="check picture folder" />
+    </p>
+    <pre class="text-start">
+images processed by CDF PDF are either darker or brighter which is bad for the machine but always good for the sight of the human.</pre
+    >
+    <p class="text-center">
+      <img src="Pictures/Dec14th-4.PNG" alt="check picture folder" />
+    </p>
+    <hr />
+    <p class="text-start dates">Dec 21st, 2023</p>
+    <h6 class="text-center">Image Enhancement in Frequency Domain</h6>
+    <pre class="text-start">
+        Fourier Series:- Sum of sines and cosines
+        Fourier Series and transform are interchangeably used in the slides and represent frequency domain.
+
+        X-Axis | Sines | Real Part 
+        Y-Axis | Cosines | Imaginary Part 
+
+        We transform images in spatial domain to frequency domain using fourier series to make the actions faster.
+
+        We, human can't see an image in frequency domain as its in a form of wave.
+
+        However, we can observe images in spatial domain (x,y) which is a 2-D plane.
+
+        all modern and fast filters are in frequency domain.
+
+        images * constant = highboosting and it scales the images.
+</pre
+    >
+    <p class="text-center">ORIGIN SHIFT TO THE CENTER (Short Question)</p>
+    <pre class="text-start">
+        increase in distance increases the repetition of lines.</pre
+    >
+    <p class="text-center">PROPERTIES OF FOURIER TRANSFORM (imp)</p>
+    <pre class="text-start">
+        impact of change in spatial domain can be seen in frequeny domain and vice versa.
+    
+    #ORTHOGONAL</pre
+    >
+    <p class="text-center">FILTERING USING FOURIER TRANSFORM</p>
+    <pre class="text-start">
+        lowpass filter => blur / smoothing 
+        highpass filter => sharperning effect 
+
+        Convolution method:- moving a mask / window throughout the image to make a change in the image (like local) but frequncy domain is a global.
+        </pre
+    >
+    <p class="text-start">IDEAL LOW PASS FILTER</p>
+    <pre class="text-start">
+keep it 0 to stop bright light and let dark pass 
+keep it 1 to stop dark light and let bright pass 
+
+#INVERSE
+
+ringing effect is its disadvantage whenever blur happens at a certain range.
+</pre
+    >
+    <p class="text-center">BUTTERWORTH LOW PASS FILTER</p>
+    <pre class="text-start">
+        it has comparatively low ringing effects and has variations unlike low pass filter which is either 0 or 1.
+    </pre>
+    <p class="text-center">GAUSSIAN LOW PASS FILTER</p>
+    <p class="text-start">
+      it doesn't give any ringing effect and is most flexible of them all.
+    </p>
+    <hr />
+    <p class="text-start dates">Dec 28th, 2023</p>
+    <h6 class="text-center">Lecture # 7</h6>
+    <pre class="text-start dates">
+    Quiz in next class... (histogram + frequency domain + noise)
+</pre
+    >
+    <p class="text-start">
+      Difference between fourier series and fourier transform?
+    </p>
+    <p class="text-start">
+      what is the impact of high frequency and low frequency?
+    </p>
+    <p class="text-start">
+      if frequency of image is too high, the edges are sharped and yet we have
+      to enhance the image, we use unsharp masking and low pass filter which
+      help reduce the frequency.
+    </p>
+    <h6 class="text-center">Lecture 09 - Image Restoration - I</h6>
+    <pre class="text-start">
+the sources of noise can be image acquisition and image transmission.</pre
+    >
+    <p class="text-start">what are the models of noise?</p>
+    <ul>
+      <li>gaussian noise</li>
+      <p class="text-start">
+        noise having soem graphs like y starts with 0. actual shape is available
+        in the slides.
+      </p>
+      <li>erlang noise / gamma noise</li>
+      <p class="text-start">always starts with x = 0, shape in the slides.</p>
+    </ul>
+    <pre class="text-start">
+the blacks are at left and white are kept at right</pre
+    >
+    <p class="text-start">what is white line?</p>
+    <pre class="text-start">
+periodic noise is at acquisition level. periodic noise (dots) can be called as
+                        unipolar noise which is used in salt and pepper but we'll remove dots by using median filter.
+                    </pre
+    >
+    <pre class="text-start">
+harmonic filter is good for salt noise.
+
+                        geometric filter is good for pepper nosie.
+
+
+                        both salt and pepper (bright and dark) noise can't be fixed at a time, but we often use geometic filter to fix both at once. they influence both of them. in cases when we don't have enough time or the enhancement isn't that much important.
+                    </pre
+    >
+    <p class="text-start">
+      how to remove salt noise in contra-harmonic mean filter? Q < 0
+    </p>
+    <p class="text-start">
+      when contra harmonic filter = arithmetic mean filter? Q = 0
+    </p>
+    <pre class="text-start">
+why contra harmonic filter is considered as flexible? 
+                                it let us use for various purposes when changing the values in a specific way. it can help remove both salt and pepper noise (one at a time).
+                            </pre
+    >
+    <pre class="text-start">
+what is the order of removal of noise?
+
+ at first we remove salt (bright) noise and then pepper (dark) noise.
+                            </pre
+    >
+    <h6 class="text-center">
+      Slide # 40 - Classification of centre harmonic === Important.
+    </h6>
+    <hr />
+    <p class="text-start dates">Jan 18th, 2024</p>
+    <h6 class="text-center">Color Image Processing / Pseudo of Light</h6>
+    <pre class="text-start">
+The Primary colors of lights are red, green and blue.
+
+    the seconary colors of light are magenda, cyan and yellow.
+  </pre
+    >
+    <pre class="text-start">
+      printer uses pigments
+
+      RGB can't produce black as values 0 means no need to throw the ink.
+
+      RGB = white = additive
+      MCY = black = subtractive
+    </pre>
+    <p class="text-center">
+      <img src="Pictures/1-Jan18th.png" alt="1-Jan18th" />
+    </p>
+    <p class="text-center">
+      <img src="Pictures/2-Jan18th.png" alt="2-Jan18th" />
+    </p>
+    <p class="text-center">
+      <img src="Pictures/3-Jan18th.png" alt="3-Jan18th" />
+    </p>
+
+    <hr />
+    <h6 class="text-center">Good Luck for the Exams</h6>
+  </body>
+</html>

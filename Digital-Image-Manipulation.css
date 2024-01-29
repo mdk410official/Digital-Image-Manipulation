@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  z-index: 1;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.navbar a {
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar a:hover {
+  background-color: red;
+}
+
+.img {
+  width: 1000px;
+}
+
+body {
+  margin: 20px 0px;
+}
+
+pre {
+  overflow: auto;
+  height: fit-content;
+  width: fit-content;
+  white-space: pre-wrap;
+  word-wrap: normal;
+}
+
+h6 {
+  position: relative;
+  left: 200px;
+}
+
+.text-center {
+  font-size: 24px;
+  text-align: center;
+}
+
+.text-start {
+  text-align: left;
+  font-size: 20px;
+}
+
+.dates {
+  color: red;
+}
+
+hr {
+  border: 1px solid red;
+}
+
+.diagram {
+  width: fit-content;
+  border: 2px solid black;
+  display: inline;
+  margin: 80px;
+}
+
+.diagram-container {
+  position: relative;
+  left: 200px;
+}
+
+ul li {
+  position: relative;
+  left: 200px;
+  width: 1200px;
+  font-size: 20px;
+}
+
+ol li {
+  position: relative;
+  left: 200px;
+  width: 1200px;
+  font-size: 20px;
+}
+
+p {
+  position: relative;
+  left: 300px;
+  width: 1200px;
+  font-size: 20px;
+}
+
+table {
+  display: flex;
+  justify-content: center;
+}
+table tr:hover {
+  background-color: silver;
+}
+table tr th,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
